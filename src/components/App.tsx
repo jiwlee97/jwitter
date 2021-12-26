@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { authService } from "../fbase";
 import Router from "./Router";
 
 function App() {
-  const [isLoggedIn] = useState<boolean>(true);
-
-  console.log(authService);
+  const [isLoggedIn] = useState<boolean>(false);
 
   return <Router isLoggedIn={isLoggedIn} />;
 }
