@@ -17,7 +17,7 @@ const Router: VFC<IProps> = ({ userObj }) => {
       <Routes>
         {userObj ? (
           <>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home userObj={userObj} />} />
             <Route path="profile/*" element={<Profile />} />
           </>
         ) : (

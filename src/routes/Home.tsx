@@ -1,13 +1,18 @@
-import { dbService } from "fbase";
-import { useCallback, useEffect, useState } from "react";
+import { dbService, FbaseUser } from "fbase";
+import { useCallback, useEffect, useState, VFC } from "react";
+
+interface IProps {
+  userObj: FbaseUser;
+}
 
 interface IJweetWithId {
   text: string;
   createdAt: Date;
+  creatorId: string;
   id: string;
 }
 
-const Home = () => {
+const Home: VFC<IProps> = ({ userObj }) => {
   const [jweet, setJweet] = useState<string>("");
   const [jweetsWithId, setJweetsWithId] = useState<IJweetWithId[]>([]);
 
@@ -28,30 +33,27 @@ const Home = () => {
       await dbService.collection("jweets").add({
         text: jweet,
         createdAt: Date.now(),
+        creatorId: userObj.uid,
       });
       setJweet("");
     },
-    [jweet]
+    [jweet, userObj.uid]
   );
 
-  const getJweets = useCallback(async () => {
-    const dbJweets = await dbService
-      .collection("jweets")
-      .orderBy("createdAt")
-      .get();
-    dbJweets.forEach((result) => {
-      const jweetObj: IJweetWithId = {
-        text: result.data().text,
-        createdAt: result.data().createdAt,
-        id: result.id,
-      };
-      setJweetsWithId((prev) => [jweetObj, ...prev]);
-    });
-  }, []);
-
   useEffect(() => {
-    getJweets();
-  }, [getJweets]);
+    dbService
+      .collection("jweets")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const jweetArray = snapshot.docs.map((doc) => ({
+          text: doc.data().text,
+          createdAt: doc.data().createdAt,
+          creatorId: userObj.uid,
+          id: doc.id,
+        }));
+        setJweetsWithId(jweetArray);
+      });
+  }, [userObj.uid]);
 
   return (
     <div>
