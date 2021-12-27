@@ -63,7 +63,6 @@ const Home: VFC<IProps> = ({ userObj }) => {
         creatorId: userObj.uid,
         fileUrl,
       };
-      console.log(jweetObj);
       await dbService.collection("jweets").add(jweetObj);
       setJweet("");
       setFileString(null);

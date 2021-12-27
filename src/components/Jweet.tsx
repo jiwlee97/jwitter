@@ -1,4 +1,4 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import { useCallback, useState, VFC } from "react";
 import { IJweetWithId } from "routes/Home";
 
@@ -11,13 +11,15 @@ const Jweet: VFC<IProps> = ({ jweetObj, isCreator }) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [newJweet, setNewJweet] = useState<string>(jweetObj.text);
 
-  const onClickDelete = useCallback(() => {
+  const onClickDelete = useCallback(async () => {
     const ok = window.confirm("Are you sure to delete this jweet?");
 
     if (ok) {
       dbService.doc(`jweets/${jweetObj.id}`).delete();
+      jweetObj.fileUrl &&
+        (await storageService.refFromURL(jweetObj.fileUrl).delete());
     }
-  }, [jweetObj.id]);
+  }, [jweetObj.fileUrl, jweetObj.id]);
 
   const toggleEditing = useCallback(() => {
     setEditing((prev) => !prev);
