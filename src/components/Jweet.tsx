@@ -64,6 +64,14 @@ const Jweet: VFC<IProps> = ({ jweetObj, isCreator }) => {
       ) : (
         <>
           <h4>{jweetObj.text}</h4>
+          {jweetObj.fileUrl && (
+            <img
+              alt="FileImage"
+              src={jweetObj.fileUrl}
+              width="50px"
+              height="50px"
+            />
+          )}
           {isCreator && (
             <>
               <button type="button" onClick={onClickDelete}>

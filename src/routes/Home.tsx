@@ -1,6 +1,7 @@
 import Jweet from "components/Jweet";
-import { dbService, FbaseUser } from "fbase";
+import { dbService, FbaseUser, storageService } from "fbase";
 import { useCallback, useEffect, useRef, useState, VFC } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 interface IProps {
   userObj: FbaseUser;
@@ -10,6 +11,7 @@ export interface IJweetWithId {
   text: string;
   createdAt: Date;
   creatorId: string;
+  fileUrl: string;
   id: string;
 }
 
@@ -44,17 +46,29 @@ const Home: VFC<IProps> = ({ userObj }) => {
   const onSubmit = useCallback(
     async (event) => {
       event.preventDefault();
-      if (!jweet) {
+      if (!jweet && !fileString) {
         return;
       }
-      await dbService.collection("jweets").add({
+      let fileUrl = "";
+      if (fileString) {
+        const fileRefChild = storageService
+          .ref()
+          .child(`${userObj.uid}/${uuidv4()}`);
+        const response = await fileRefChild.putString(fileString, "data_url");
+        fileUrl = await response.ref.getDownloadURL();
+      }
+      const jweetObj = {
         text: jweet,
         createdAt: Date.now(),
         creatorId: userObj.uid,
-      });
+        fileUrl,
+      };
+      console.log(jweetObj);
+      await dbService.collection("jweets").add(jweetObj);
       setJweet("");
+      setFileString(null);
     },
-    [jweet, userObj.uid]
+    [fileString, jweet, userObj.uid]
   );
 
   const onClickClearFileString = useCallback(() => {
@@ -73,6 +87,7 @@ const Home: VFC<IProps> = ({ userObj }) => {
           text: doc.data().text,
           createdAt: doc.data().createdAt,
           creatorId: doc.data().creatorId,
+          fileUrl: doc.data().fileUrl,
           id: doc.id,
         }));
         setJweetsWithId(jweetArray);
