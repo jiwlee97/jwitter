@@ -25,7 +25,6 @@ const Auth = () => {
         return;
       }
       if (newAccount) {
-        console.log("Sign Up");
         await authService
           .createUserWithEmailAndPassword(email, password)
           .catch((error) => {
@@ -37,7 +36,6 @@ const Auth = () => {
             }
           });
       } else {
-        console.log("Log In");
         await authService
           .signInWithEmailAndPassword(email, password)
           .catch((error) => {
