@@ -2,11 +2,11 @@ import { FbaseUser } from "fbase";
 import { VFC } from "react";
 import { Link } from "react-router-dom";
 
-interface Props {
+interface IProps {
   userObj: FbaseUser | null;
 }
 
-const Navigation: VFC<Props> = ({ userObj }) => {
+const Navigation: VFC<IProps> = ({ userObj }) => {
   return (
     <nav>
       <ul>

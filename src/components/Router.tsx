@@ -6,11 +6,11 @@ import Home from "routes/Home";
 import Profile from "routes/Profile";
 import Navigation from "./Navigation";
 
-interface Props {
+interface IProps {
   userObj: FbaseUser | null;
 }
 
-const Router: VFC<Props> = ({ userObj }) => {
+const Router: VFC<IProps> = ({ userObj }) => {
   return (
     <BrowserRouter>
       {userObj && <Navigation userObj={userObj} />}
