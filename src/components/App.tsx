@@ -4,21 +4,24 @@ import Router from "./Router";
 
 function App() {
   const [init, setInit] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<FbaseUser | null>(
+  const [userObj, setUserObj] = useState<FbaseUser | null>(
     authService.currentUser
   );
 
   useEffect(() => {
     authService.onAuthStateChanged((user: FbaseUser | null) => {
-      setIsLoggedIn(user);
+      if (!user?.displayName) {
+        user?.updateProfile({
+          displayName: "User",
+        });
+      }
+      setUserObj(user);
       setInit(true);
     });
   }, []);
 
   return (
-    <>
-      {init ? <Router isLoggedIn={isLoggedIn} /> : <div>Initializing...</div>}
-    </>
+    <>{init ? <Router userObj={userObj} /> : <div>Initializing...</div>}</>
   );
 }
 

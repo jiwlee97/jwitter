@@ -4,16 +4,18 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Profile from "routes/Profile";
+import Navigation from "./Navigation";
 
 interface Props {
-  isLoggedIn: FbaseUser | null;
+  userObj: FbaseUser | null;
 }
 
-const Router: VFC<Props> = ({ isLoggedIn }) => {
+const Router: VFC<Props> = ({ userObj }) => {
   return (
     <BrowserRouter>
+      {userObj && <Navigation userObj={userObj} />}
       <Routes>
-        {isLoggedIn ? (
+        {userObj ? (
           <>
             <Route path="/" element={<Home />} />
             <Route path="profile/*" element={<Profile />} />
