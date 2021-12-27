@@ -1,3 +1,4 @@
+import Jweet from "components/Jweet";
 import { dbService, FbaseUser } from "fbase";
 import { useCallback, useEffect, useState, VFC } from "react";
 
@@ -5,7 +6,7 @@ interface IProps {
   userObj: FbaseUser;
 }
 
-interface IJweetWithId {
+export interface IJweetWithId {
   text: string;
   createdAt: Date;
   creatorId: string;
@@ -48,7 +49,7 @@ const Home: VFC<IProps> = ({ userObj }) => {
         const jweetArray = snapshot.docs.map((doc) => ({
           text: doc.data().text,
           createdAt: doc.data().createdAt,
-          creatorId: userObj.uid,
+          creatorId: doc.data().creatorId,
           id: doc.id,
         }));
         setJweetsWithId(jweetArray);
@@ -69,9 +70,13 @@ const Home: VFC<IProps> = ({ userObj }) => {
         <button type="submit">Jweet</button>
       </form>
       <div>
-        {jweetsWithId.map((jweetWithId) => {
-          return <div key={jweetWithId.id}>{jweetWithId.text}</div>;
-        })}
+        {jweetsWithId.map((jweetWithId) => (
+          <Jweet
+            key={jweetWithId.id}
+            jweetObj={jweetWithId}
+            isCreator={jweetWithId.creatorId === userObj.uid}
+          />
+        ))}
       </div>
     </div>
   );
