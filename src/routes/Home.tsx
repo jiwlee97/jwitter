@@ -1,6 +1,6 @@
 import Jweet from "components/Jweet";
 import { dbService, FbaseUser } from "fbase";
-import { useCallback, useEffect, useState, VFC } from "react";
+import { useCallback, useEffect, useRef, useState, VFC } from "react";
 
 interface IProps {
   userObj: FbaseUser;
@@ -16,6 +16,8 @@ export interface IJweetWithId {
 const Home: VFC<IProps> = ({ userObj }) => {
   const [jweet, setJweet] = useState<string>("");
   const [jweetsWithId, setJweetsWithId] = useState<IJweetWithId[]>([]);
+  const [fileString, setFileString] = useState<string | null>(null);
+  const fileInput = useRef<HTMLInputElement | null>(null);
 
   const onChange = useCallback((event) => {
     const {
@@ -23,6 +25,20 @@ const Home: VFC<IProps> = ({ userObj }) => {
     } = event;
 
     setJweet(value);
+  }, []);
+
+  const onChangeFile = useCallback((event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const { result } = reader;
+      setFileString(result as string);
+    };
+    reader.readAsDataURL(theFile);
   }, []);
 
   const onSubmit = useCallback(
@@ -40,6 +56,13 @@ const Home: VFC<IProps> = ({ userObj }) => {
     },
     [jweet, userObj.uid]
   );
+
+  const onClickClearFileString = useCallback(() => {
+    setFileString(null);
+    if (fileInput.current) {
+      fileInput.current.value = "";
+    }
+  }, []);
 
   useEffect(() => {
     dbService
@@ -67,7 +90,21 @@ const Home: VFC<IProps> = ({ userObj }) => {
           value={jweet}
           onChange={onChange}
         />
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInput}
+          onChange={onChangeFile}
+        />
         <button type="submit">Jweet</button>
+        {fileString && (
+          <>
+            <img alt="FileImage" src={fileString} width="50px" height="50px" />
+            <button type="button" onClick={onClickClearFileString}>
+              Clear
+            </button>
+          </>
+        )}
       </form>
       <div>
         {jweetsWithId.map((jweetWithId) => (
