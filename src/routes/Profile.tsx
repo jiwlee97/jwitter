@@ -1,12 +1,14 @@
-import { authService, FbaseUser } from "fbase";
+import { IUser } from "components/App";
+import { authService } from "fbase";
 import { useCallback, useState, VFC } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
-  userObj: FbaseUser;
+  userObj: IUser;
+  refreshUser: () => void;
 }
 
-const Profile: VFC<IProps> = ({ userObj }) => {
+const Profile: VFC<IProps> = ({ userObj, refreshUser }) => {
   const navigate = useNavigate();
   const [editing, setEditing] = useState<boolean>(false);
   const [newDisplayName, setNewDisplayName] = useState<string>(
@@ -27,8 +29,9 @@ const Profile: VFC<IProps> = ({ userObj }) => {
         displayName: newDisplayName,
       });
       setEditing(false);
+      refreshUser();
     },
-    [newDisplayName, userObj]
+    [newDisplayName, refreshUser, userObj]
   );
 
   const onChange = useCallback((event) => {

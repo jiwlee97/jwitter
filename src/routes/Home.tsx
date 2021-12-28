@@ -1,10 +1,11 @@
+import { IUser } from "components/App";
 import Jweet from "components/Jweet";
-import { dbService, FbaseUser, storageService } from "fbase";
+import { dbService, storageService } from "fbase";
 import { useCallback, useEffect, useRef, useState, VFC } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 interface IProps {
-  userObj: FbaseUser;
+  userObj: IUser;
 }
 
 export interface IJweetWithId {
@@ -18,7 +19,7 @@ export interface IJweetWithId {
 const Home: VFC<IProps> = ({ userObj }) => {
   const [jweet, setJweet] = useState<string>("");
   const [jweetsWithId, setJweetsWithId] = useState<IJweetWithId[]>([]);
-  const [fileString, setFileString] = useState<string | null>(null);
+  const [fileString, setFileString] = useState<string>("");
   const fileInput = useRef<HTMLInputElement | null>(null);
 
   const onChange = useCallback((event) => {
@@ -65,13 +66,16 @@ const Home: VFC<IProps> = ({ userObj }) => {
       };
       await dbService.collection("jweets").add(jweetObj);
       setJweet("");
-      setFileString(null);
+      setFileString("");
+      if (fileInput.current) {
+        fileInput.current.value = "";
+      }
     },
     [fileString, jweet, userObj.uid]
   );
 
   const onClickClearFileString = useCallback(() => {
-    setFileString(null);
+    setFileString("");
     if (fileInput.current) {
       fileInput.current.value = "";
     }

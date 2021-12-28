@@ -1,9 +1,9 @@
-import { FbaseUser } from "fbase";
 import { VFC } from "react";
 import { Link } from "react-router-dom";
+import { IUser } from "./App";
 
 interface IProps {
-  userObj: FbaseUser | null;
+  userObj: IUser | null;
 }
 
 const Navigation: VFC<IProps> = ({ userObj }) => {
