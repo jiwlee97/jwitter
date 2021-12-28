@@ -20,7 +20,7 @@ const Router: VFC<IProps> = ({ userObj, refreshUser }) => {
           <>
             <Route path="/" element={<Home userObj={userObj} />} />
             <Route
-              path="/profile"
+              path="profile/*"
               element={<Profile userObj={userObj} refreshUser={refreshUser} />}
             />
           </>
