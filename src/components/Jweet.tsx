@@ -1,6 +1,6 @@
 import { dbService, storageService } from "fbase";
 import { useCallback, useState, VFC } from "react";
-import { IJweetWithId } from "routes/Home";
+import { IJweetWithId } from "./JweetList";
 
 interface IProps {
   jweetObj: IJweetWithId;
