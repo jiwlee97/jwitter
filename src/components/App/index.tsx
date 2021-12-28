@@ -1,6 +1,6 @@
 import { authService, FbaseUser } from "fbase";
 import { useCallback, useEffect, useState } from "react";
-import Router from "../Router/Router";
+import Router from "components/Router";
 
 export interface IUser {
   uid: string;

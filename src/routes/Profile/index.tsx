@@ -1,5 +1,5 @@
-import { IUser } from "components/App/App";
-import EditNickname from "components/EditNickname/EditNickname";
+import { IUser } from "components/App";
+import EditNickname from "components/EditNickname";
 import { authService } from "fbase";
 import { useCallback, VFC } from "react";
 import { useNavigate } from "react-router-dom";

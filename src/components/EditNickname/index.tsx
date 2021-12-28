@@ -1,5 +1,5 @@
 import { useCallback, useState, VFC } from "react";
-import { IUser } from "../App/App";
+import { IUser } from "components/App";
 
 interface IProps {
   userObj: IUser;

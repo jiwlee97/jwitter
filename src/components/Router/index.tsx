@@ -1,10 +1,10 @@
 import { VFC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Auth from "routes/Auth/Auth";
-import Home from "routes/Home/Home";
-import Profile from "routes/Profile/Profile";
-import { IUser } from "../App/App";
-import Navigation from "../Navigation/Navigation";
+import Auth from "routes/Auth";
+import Home from "routes/Home";
+import Profile from "routes/Profile";
+import { IUser } from "components/App";
+import Navigation from "components/Navigation";
 
 interface IProps {
   userObj: IUser | null;
