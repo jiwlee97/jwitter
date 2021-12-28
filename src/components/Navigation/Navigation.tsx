@@ -1,6 +1,6 @@
 import { VFC } from "react";
 import { Link } from "react-router-dom";
-import { IUser } from "./App";
+import { IUser } from "../App/App";
 
 interface IProps {
   userObj: IUser | null;

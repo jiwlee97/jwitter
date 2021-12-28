@@ -1,6 +1,6 @@
-import { IUser } from "components/App";
-import JweetFactory from "components/JweetFactory";
-import JweetList from "components/JweetList";
+import { IUser } from "components/App/App";
+import JweetFactory from "components/JweetFactory/JweetFactory";
+import JweetList from "components/JweetList/JweetList";
 import { VFC } from "react";
 
 interface IProps {

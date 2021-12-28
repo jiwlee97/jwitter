@@ -1,7 +1,7 @@
 import { dbService } from "fbase";
 import { useEffect, useState, VFC } from "react";
-import { IUser } from "./App";
-import Jweet from "./Jweet";
+import { IUser } from "../App/App";
+import Jweet from "../Jweet/Jweet";
 
 interface IProps {
   userObj: IUser;

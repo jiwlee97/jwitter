@@ -1,6 +1,6 @@
 import { dbService, storageService } from "fbase";
 import { useCallback, useRef, useState, VFC } from "react";
-import { IUser } from "./App";
+import { IUser } from "../App/App";
 import { v4 as uuidv4 } from "uuid";
 
 interface IProps {
