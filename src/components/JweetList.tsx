@@ -32,7 +32,10 @@ const JweetList: VFC<IProps> = ({ userObj }) => {
         }));
         setJweetsWithId(jweetArray);
       });
-  }, [userObj.uid]);
+    return () => {
+      setJweetsWithId([]);
+    };
+  }, []);
 
   return (
     <div>
