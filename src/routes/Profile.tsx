@@ -12,9 +12,9 @@ interface IProps {
 const Profile: VFC<IProps> = ({ userObj, refreshUser }) => {
   const navigate = useNavigate();
 
-  const onClickLogOut = useCallback(() => {
-    authService.signOut();
+  const onClickLogOut = useCallback(async () => {
     navigate("/");
+    await authService.signOut();
   }, [navigate]);
 
   return (
