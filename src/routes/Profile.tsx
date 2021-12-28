@@ -1,5 +1,5 @@
 import { IUser } from "components/App";
-import EditNicknameForm from "components/EditNicknameForm";
+import EditNickname from "components/EditNickname";
 import { authService } from "fbase";
 import { useCallback, VFC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const Profile: VFC<IProps> = ({ userObj, refreshUser }) => {
     <>
       <div>
         <h4>My Nickname: {userObj.displayName}</h4>
-        <EditNicknameForm userObj={userObj} refreshUser={refreshUser} />
+        <EditNickname userObj={userObj} refreshUser={refreshUser} />
       </div>
       <button type="button" onClick={onClickLogOut}>
         Log Out

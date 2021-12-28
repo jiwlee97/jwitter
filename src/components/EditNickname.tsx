@@ -6,7 +6,7 @@ interface IProps {
   refreshUser: () => void;
 }
 
-const EditNicknameForm: VFC<IProps> = ({ userObj, refreshUser }) => {
+const EditNickname: VFC<IProps> = ({ userObj, refreshUser }) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [newDisplayName, setNewDisplayName] = useState<string>(
     userObj.displayName ?? "User"
@@ -62,4 +62,4 @@ const EditNicknameForm: VFC<IProps> = ({ userObj, refreshUser }) => {
   );
 };
 
-export default EditNicknameForm;
+export default EditNickname;
