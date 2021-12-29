@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/jwitter/static/js/main.dd6a4e38.js",
-    "index.html": "/jwitter/index.html",
-    "main.dd6a4e38.js.map": "/jwitter/static/js/main.dd6a4e38.js.map"
+    "main.js": "https://jiwlee97.github.io/jwitter/static/js/main.db042bb2.js",
+    "index.html": "https://jiwlee97.github.io/jwitter/index.html",
+    "main.db042bb2.js.map": "https://jiwlee97.github.io/jwitter/static/js/main.db042bb2.js.map"
   },
   "entrypoints": [
-    "static/js/main.dd6a4e38.js"
+    "static/js/main.db042bb2.js"
   ]
 }
