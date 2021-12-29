@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/jwitter/static/js/main.ccbce65e.js",
+    "index.html": "/jwitter/index.html",
+    "main.ccbce65e.js.map": "/jwitter/static/js/main.ccbce65e.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.ccbce65e.js"
+  ]
+}
