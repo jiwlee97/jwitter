@@ -1,5 +1,8 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { authService, firebaseInstance } from "fbase";
 import { useCallback } from "react";
+import { Button } from "./styles";
 
 const AuthSocial = () => {
   const onClickSocial = useCallback(async (event) => {
@@ -18,12 +21,14 @@ const AuthSocial = () => {
 
   return (
     <div>
-      <button name="google" onClick={onClickSocial}>
-        Continue with Google
-      </button>
-      <button name="github" onClick={onClickSocial}>
-        Continue with Github
-      </button>
+      <Button name="google" onClick={onClickSocial}>
+        Continue with Google&nbsp;
+        <FontAwesomeIcon icon={faGoogle} />
+      </Button>
+      <Button name="github" onClick={onClickSocial}>
+        Continue with Github&nbsp;
+        <FontAwesomeIcon icon={faGithub} />
+      </Button>
     </div>
   );
 };

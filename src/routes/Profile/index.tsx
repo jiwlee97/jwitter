@@ -3,6 +3,7 @@ import EditNickname from "components/EditNickname";
 import { authService } from "fbase";
 import { useCallback, VFC } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container } from "./styles";
 
 interface IProps {
   userObj: IUser;
@@ -18,15 +19,12 @@ const Profile: VFC<IProps> = ({ userObj, refreshUser }) => {
   }, [navigate]);
 
   return (
-    <>
-      <div>
-        <h4>My Nickname: {userObj.displayName}</h4>
-        <EditNickname userObj={userObj} refreshUser={refreshUser} />
-      </div>
+    <Container>
+      <EditNickname userObj={userObj} refreshUser={refreshUser} />
       <button type="button" onClick={onClickLogOut}>
         Log Out
       </button>
-    </>
+    </Container>
   );
 };
 

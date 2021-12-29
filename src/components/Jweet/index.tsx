@@ -1,6 +1,13 @@
 import { dbService, storageService } from "fbase";
 import { useCallback, useState, VFC } from "react";
 import { IJweetWithId } from "components/JweetList";
+import { Buttons, EditJweetForm, ImgWrapper, JweetContainer } from "./styles";
+import {
+  faTrashAlt,
+  faPencilAlt,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProps {
   jweetObj: IJweetWithId;
@@ -49,42 +56,58 @@ const Jweet: VFC<IProps> = ({ jweetObj, isCreator }) => {
   return (
     <div>
       {editing && isCreator ? (
-        <>
-          <form onSubmit={onSubmit}>
-            <input
-              type="text"
-              placeholder="Edit your jweet"
-              value={newJweet}
-              onChange={onChange}
-            />
-            <button type="submit">Edit Jweet</button>
-          </form>
-          <button type="button" onClick={toggleEditing}>
-            Cancel
-          </button>
-        </>
+        <EditJweetForm onSubmit={onSubmit}>
+          <input
+            type="text"
+            placeholder="Edit your jweet"
+            value={newJweet}
+            onChange={onChange}
+          />
+          <Buttons>
+            <button type="submit">
+              <FontAwesomeIcon
+                icon={faPencilAlt}
+                style={{ width: "15px", height: "15px" }}
+              />
+            </button>
+            <button type="button" onClick={toggleEditing}>
+              <FontAwesomeIcon
+                icon={faTimes}
+                style={{ width: "15px", height: "15px" }}
+              />
+            </button>
+          </Buttons>
+        </EditJweetForm>
       ) : (
-        <>
-          <h4>{jweetObj.text}</h4>
+        <JweetContainer
+          isCreator={isCreator}
+          imgExit={Boolean(jweetObj.fileUrl)}
+        >
+          <div>{jweetObj.text}</div>
           {jweetObj.fileUrl && (
-            <img
-              alt="FileImage"
-              src={jweetObj.fileUrl}
-              width="50px"
-              height="50px"
-            />
+            <ImgWrapper>
+              <div>
+                <img alt="FileImage" src={jweetObj.fileUrl} />
+              </div>
+            </ImgWrapper>
           )}
           {isCreator && (
-            <>
+            <Buttons>
               <button type="button" onClick={onClickDelete}>
-                Delete Jweet
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  style={{ width: "15px", height: "15px", color: "#444444" }}
+                />
               </button>
               <button type="button" onClick={toggleEditing}>
-                Edit Jweet
+                <FontAwesomeIcon
+                  icon={faPencilAlt}
+                  style={{ width: "15px", height: "15px", color: "#444444" }}
+                />
               </button>
-            </>
+            </Buttons>
           )}
-        </>
+        </JweetContainer>
       )}
     </div>
   );

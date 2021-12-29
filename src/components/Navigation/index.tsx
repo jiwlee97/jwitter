@@ -1,6 +1,10 @@
 import { VFC } from "react";
 import { Link } from "react-router-dom";
 import { IUser } from "components/App";
+import { Nav } from "./styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface IProps {
   userObj: IUser | null;
@@ -8,16 +12,40 @@ interface IProps {
 
 const Navigation: VFC<IProps> = ({ userObj }) => {
   return (
-    <nav>
+    <Nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <FontAwesomeIcon
+              icon={faTwitter}
+              style={{ color: "#1C6DD0", height: "50px", width: "50px" }}
+            />
+          </Link>
         </li>
         <li>
-          <Link to="/profile">{userObj?.displayName}'s Profile</Link>
+          <Link
+            to="/profile"
+            style={{
+              textDecoration: "none",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faUser}
+              style={{
+                color: "#1C6DD0",
+                height: "40px",
+                width: "40px",
+                marginBottom: "5px",
+              }}
+            />
+            <span>{userObj?.displayName}'s Profile</span>
+          </Link>
         </li>
       </ul>
-    </nav>
+    </Nav>
   );
 };
 

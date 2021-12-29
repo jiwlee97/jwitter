@@ -2,6 +2,13 @@ import { dbService, storageService } from "fbase";
 import { useCallback, useRef, useState, VFC } from "react";
 import { IUser } from "components/App";
 import { v4 as uuidv4 } from "uuid";
+import { Form, ImgPreview } from "./styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faPlus,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface IProps {
   userObj: IUser;
@@ -72,30 +79,45 @@ const JweetFactory: VFC<IProps> = ({ userObj }) => {
   }, []);
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        placeholder="What's on your mind?"
-        maxLength={120}
-        value={jweet}
-        onChange={onChange}
-      />
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInput}
-        onChange={onChangeFile}
-      />
-      <button type="submit">Jweet</button>
+    <>
+      <Form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={120}
+          value={jweet}
+          onChange={onChange}
+        />
+        <button type="submit">
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            style={{ width: "20px", height: "20px" }}
+          />
+        </button>
+        <label htmlFor="input-file">
+          {fileString ? "Change Photo" : "Add Photo"}&nbsp;&nbsp;&nbsp;
+          <FontAwesomeIcon icon={faPlus} />
+        </label>
+        <input
+          id="input-file"
+          type="file"
+          accept="image/*"
+          ref={fileInput}
+          onChange={onChangeFile}
+        />
+      </Form>
       {fileString && (
-        <>
-          <img alt="FileImage" src={fileString} width="50px" height="50px" />
+        <ImgPreview>
+          <img alt="FileImage" src={fileString} />
           <button type="button" onClick={onClickClearFileString}>
-            Clear
+            <FontAwesomeIcon
+              icon={faTimes}
+              style={{ width: "20px", height: "20px", color: "#444444" }}
+            />
           </button>
-        </>
+        </ImgPreview>
       )}
-    </form>
+    </>
   );
 };
 

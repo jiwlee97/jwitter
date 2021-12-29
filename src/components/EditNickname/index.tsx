@@ -1,5 +1,6 @@
 import { useCallback, useState, VFC } from "react";
 import { IUser } from "components/App";
+import { Form } from "./styles";
 
 interface IProps {
   userObj: IUser;
@@ -7,7 +8,6 @@ interface IProps {
 }
 
 const EditNickname: VFC<IProps> = ({ userObj, refreshUser }) => {
-  const [editing, setEditing] = useState<boolean>(false);
   const [newDisplayName, setNewDisplayName] = useState<string>(
     userObj.displayName ?? "User"
   );
@@ -21,10 +21,9 @@ const EditNickname: VFC<IProps> = ({ userObj, refreshUser }) => {
       await userObj.updateProfile({
         displayName: newDisplayName,
       });
-      setEditing(false);
       refreshUser();
     },
-    [newDisplayName, refreshUser, setEditing, userObj]
+    [newDisplayName, refreshUser, userObj]
   );
 
   const onChange = useCallback((event) => {
@@ -34,20 +33,8 @@ const EditNickname: VFC<IProps> = ({ userObj, refreshUser }) => {
     setNewDisplayName(value);
   }, []);
 
-  const toggleEditing = useCallback(() => {
-    setEditing((prev) => !prev);
-  }, []);
-
-  if (!editing) {
-    return (
-      <button type="button" onClick={toggleEditing}>
-        Edit Nickname
-      </button>
-    );
-  }
-
   return (
-    <form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       <input
         type="text"
         placeholder="Nickname"
@@ -55,10 +42,7 @@ const EditNickname: VFC<IProps> = ({ userObj, refreshUser }) => {
         onChange={onChange}
       />
       <button type="submit">Edit Nickname</button>
-      <button type="button" onClick={toggleEditing}>
-        Cancel
-      </button>
-    </form>
+    </Form>
   );
 };
 

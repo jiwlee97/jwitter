@@ -1,10 +1,11 @@
 import { authService } from "fbase";
 import { useCallback, useState } from "react";
+import { Container, Form } from "./styles";
 
 const AuthForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPasssword] = useState<string>("");
-  const [newAccount, setNewAccount] = useState<boolean>(true);
+  const [newAccount, setNewAccount] = useState<boolean>(false);
 
   const onChange = useCallback((event) => {
     const {
@@ -56,8 +57,8 @@ const AuthForm = () => {
   }, []);
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <Container>
+      <Form onSubmit={onSubmit}>
         <input
           name="email"
           type="email"
@@ -75,11 +76,11 @@ const AuthForm = () => {
         <button type="submit">
           {newAccount ? "Create Account" : "Log In"}
         </button>
-      </form>
+      </Form>
       <button type="button" onClick={toggleAccount}>
         {newAccount ? "Log In" : "Create Account"}
       </button>
-    </>
+    </Container>
   );
 };
 

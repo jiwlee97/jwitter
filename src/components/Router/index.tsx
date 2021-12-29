@@ -5,6 +5,7 @@ import Home from "routes/Home";
 import Profile from "routes/Profile";
 import { IUser } from "components/App";
 import Navigation from "components/Navigation";
+import { Background } from "./styles";
 
 interface IProps {
   userObj: IUser | null;
@@ -13,22 +14,26 @@ interface IProps {
 
 const Router: VFC<IProps> = ({ userObj, refreshUser }) => {
   return (
-    <BrowserRouter>
-      {userObj && <Navigation userObj={userObj} />}
-      <Routes>
-        {userObj ? (
-          <>
-            <Route path="/" element={<Home userObj={userObj} />} />
-            <Route
-              path="profile/*"
-              element={<Profile userObj={userObj} refreshUser={refreshUser} />}
-            />
-          </>
-        ) : (
-          <Route path="/" element={<Auth />} />
-        )}
-      </Routes>
-    </BrowserRouter>
+    <Background>
+      <BrowserRouter>
+        {userObj && <Navigation userObj={userObj} />}
+        <Routes>
+          {userObj ? (
+            <>
+              <Route path="/" element={<Home userObj={userObj} />} />
+              <Route
+                path="profile/*"
+                element={
+                  <Profile userObj={userObj} refreshUser={refreshUser} />
+                }
+              />
+            </>
+          ) : (
+            <Route path="/" element={<Auth />} />
+          )}
+        </Routes>
+      </BrowserRouter>
+    </Background>
   );
 };
 
