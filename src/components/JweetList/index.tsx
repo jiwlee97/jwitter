@@ -2,6 +2,7 @@ import { dbService } from "fbase";
 import { useEffect, useState, VFC } from "react";
 import { IUser } from "components/App";
 import Jweet from "components/Jweet";
+import { JweetsWrapper } from "./styles";
 
 interface IProps {
   userObj: IUser;
@@ -38,7 +39,7 @@ const JweetList: VFC<IProps> = ({ userObj }) => {
   }, []);
 
   return (
-    <div>
+    <JweetsWrapper>
       {jweetsWithId.map((jweetWithId) => (
         <Jweet
           key={jweetWithId.id}
@@ -46,7 +47,7 @@ const JweetList: VFC<IProps> = ({ userObj }) => {
           isCreator={jweetWithId.creatorId === userObj.uid}
         />
       ))}
-    </div>
+    </JweetsWrapper>
   );
 };
 

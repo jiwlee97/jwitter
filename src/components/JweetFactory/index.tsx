@@ -1,5 +1,5 @@
 import { dbService, storageService } from "fbase";
-import { useCallback, useRef, useState, VFC } from "react";
+import { RefObject, useCallback, useRef, useState, VFC } from "react";
 import { IUser } from "components/App";
 import { v4 as uuidv4 } from "uuid";
 import { Form, ImgPreview } from "./styles";
@@ -9,12 +9,14 @@ import {
   faPlus,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import Scrollbars from "react-custom-scrollbars-2";
 
 interface IProps {
   userObj: IUser;
+  scrollRef: RefObject<Scrollbars>;
 }
 
-const JweetFactory: VFC<IProps> = ({ userObj }) => {
+const JweetFactory: VFC<IProps> = ({ userObj, scrollRef }) => {
   const [jweet, setJweet] = useState<string>("");
   const [fileString, setFileString] = useState<string>("");
   const fileInput = useRef<HTMLInputElement | null>(null);
@@ -62,13 +64,14 @@ const JweetFactory: VFC<IProps> = ({ userObj }) => {
         fileUrl,
       };
       await dbService.collection("jweets").add(jweetObj);
+      scrollRef.current?.scrollToTop();
       setJweet("");
       setFileString("");
       if (fileInput.current) {
         fileInput.current.value = "";
       }
     },
-    [fileString, jweet, userObj.uid]
+    [fileString, jweet, scrollRef, userObj.uid]
   );
 
   const onClickClearFileString = useCallback(() => {
