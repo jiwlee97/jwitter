@@ -15,7 +15,7 @@ interface IProps {
 const Router: VFC<IProps> = ({ userObj, refreshUser }) => {
   return (
     <Background>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         {userObj && <Navigation userObj={userObj} />}
         <Routes>
           {userObj ? (
